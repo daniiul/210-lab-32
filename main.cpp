@@ -1,3 +1,5 @@
+// COMSC-210 | 210-lab-32 | Daniil Malakhov
+// IDE used: Codeblocks
 #include <deque>
 #include <string>
 #include <fstream>
@@ -15,6 +17,8 @@ void print(deque<Car>& toll_booth);
 
 int main()
 {
+    srand(time(0));
+
     deque<Car> toll_booth;
     int i = 0;
 
@@ -36,25 +40,25 @@ int main()
         {
             cout << "Left lane: ";
             toll_booth.front().print();
-            cout << endl;
             toll_booth.pop_front();
         }
-        else if (prob <= 44)
+        else
         {
             Car temp;
             cout << "Joined lane: ";
             temp.print();
-            cout << endl;
             toll_booth.push_back(temp);
         }
-        cout << endl;
+        cout << "Queue: " << endl;
         print(toll_booth);
         time++;
     }
 
 
 }
-
+// prints the current queue
+// arguments: address to toll_booth deque list
+// returns none
 void print(deque<Car>& toll_booth)
 {
     for(auto it : toll_booth)

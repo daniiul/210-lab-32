@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1731641544 source:c:\users\guine\onedrive\documents\codeblocks\210-lab-32\main.cpp
+	<deque>
+	<string>
+	<fstream>
+	<iomanip>
+	<algorithm>
+	<random>
+	<iostream>
+	"Car.h"
+
+1731638992 c:\users\guine\onedrive\documents\codeblocks\210-lab-32\car.h
+	<iostream>
+	<iomanip>
+
