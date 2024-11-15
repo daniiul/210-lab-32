@@ -13,7 +13,7 @@ using namespace std;
 
 const int INITIAL_QUEUE = 2, LANES = 4, PROB1 = 46, PROB2 = 39, PROB3 = 15;
 
-void print(deque<Car> (&lanes)[LANES]);
+void print(deque<Car>& lane);
 
 int main()
 {
@@ -36,12 +36,17 @@ int main()
         }
         i = 0;
     }
-    print(lanes);
+    for(int j = 0; j < LANES; j++)
+    {
+        cout << "Lane " << j + 1 << ": " << endl;
+        print(lanes[j]);
+    }
+
 
     int time = 1;
     while(time <= 20)
     {
-        cout << "Time " << time << ": ";
+        cout << "Time " << time << ": " << endl;
         int l = 1;
         for (int i = 0; i < LANES; i++)
         {
@@ -49,9 +54,11 @@ int main()
             cout << "Lane " << l << ": ";
             if (prob <= PROB1)
             {
-                cout << "Left lane: ";
-                lanes[i].front().print();
-                lanes[i].pop_front();
+                if(!lanes[i].empty()){
+                    cout << "Left lane: ";
+                    lanes[i].front().print();
+                    lanes[i].pop_front();
+                }
             }
             else if (prob <= PROB2)
             {
@@ -62,25 +69,28 @@ int main()
             }
             else if (prob <= PROB3)
             {
-                int randLane = rand() % 4;
-                do
-                {
-                    randLane = rand() % 4;
-                } while(randLane != (l - 1));
-                Car temp;
-                temp.setMake(lanes[i].back().getMake());
-                temp.setYear(lanes[i].back().getYear());
-                temp.setTransponder(lanes[i].back().getTransponder());
-                lanes[i].pop_back();
-                lanes[randLane].push_back(temp);
-                cout << "Switched: ";
-                temp.print();
+                if(!lanes[i].empty()){
+                    int randLane = rand() % 4;
+                    do
+                    {
+                        randLane = rand() % 4;
+                    } while(randLane != (l - 1));
+                    Car temp;
+                    temp.setMake(lanes[i].back().getMake());
+                    temp.setYear(lanes[i].back().getYear());
+                    temp.setTransponder(lanes[i].back().getTransponder());
+                    lanes[i].pop_back();
+                    lanes[randLane].push_back(temp);
+                    cout << "Switched: ";
+                    temp.print();
+                }
             }
             cout << "Queue: " << endl;
-            print(lanes);
+            print(lanes[i]);
             l++;
         }
-       time++;
+        cout << endl;
+        time++;
     }
 
 
@@ -88,15 +98,17 @@ int main()
 // prints the current queue
 // arguments: address to toll_booth deque list
 // returns none
-void print(deque<Car> (&lanes)[LANES])
+void print(deque<Car>& lane)
 {
-    for(int i = 0; i < LANES; i++)
+    if (!lane.empty())
     {
-       for(auto it : lanes[i])
+        for(auto it : lane)
         {
             cout << "     ";
             it.print();
-
         }
     }
+    else
+        cout << "     Lane is currently empty!" << endl;
+
 }
