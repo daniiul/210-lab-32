@@ -25,12 +25,12 @@ int main()
 
     cout << "Initial Queue: " << endl;
 
-    for(auto lane : lanes)
+    for(int j = 0; j < LANES; j++)
     {
         while(i < INITIAL_QUEUE)
         {
             Car temp;
-            lane.push_back(temp);
+            lanes[j].push_back(temp);
             cout << "ss" << endl;
             i++;
         }
@@ -43,22 +43,22 @@ int main()
     {
         cout << "Time " << time << ": ";
         int l = 1;
-        for (auto lane : lanes)
+        for (int i = 0; i < LANES; i++)
         {
             int prob = rand() % 100 + 1;  // returns random number 1-100
             cout << "Lane " << l << ": ";
             if (prob <= PROB1)
             {
                 cout << "Left lane: ";
-                lane.front().print();
-                lane.pop_front();
+                lanes[i].front().print();
+                lanes[i].pop_front();
             }
             else if (prob <= PROB2)
             {
                 Car temp;
                 cout << "Joined lane: ";
                 temp.print();
-                lane.push_back(temp);
+                lanes[i].push_back(temp);
             }
             else if (prob <= PROB3)
             {
@@ -67,8 +67,11 @@ int main()
                 {
                     randLane = rand() % 4;
                 } while(randLane != (l - 1));
-                Car temp = lane.back();
-                lane.pop_back();
+                Car temp;
+                temp.setMake(lanes[i].back().getMake());
+                temp.setYear(lanes[i].back().getYear());
+                temp.setTransponder(lanes[i].back().getTransponder());
+                lanes[i].pop_back();
                 lanes[randLane].push_back(temp);
                 cout << "Switched: ";
                 temp.print();
@@ -87,14 +90,13 @@ int main()
 // returns none
 void print(deque<Car> (&lanes)[LANES])
 {
-    for(auto lane : lanes)
+    for(int i = 0; i < LANES; i++)
     {
-        for(auto it : lane)
+       for(auto it : lanes[i])
         {
             cout << "     ";
             it.print();
 
         }
-
     }
 }
