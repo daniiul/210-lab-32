@@ -60,7 +60,7 @@ int main()
                     do
                     {
                         randLane = rand() % 4;
-                    } while(randLane != (l - 1));
+                    } while(randLane == (l - 1));
                     Car temp;
                     temp.setMake(lanes[i].back().getMake());
                     temp.setYear(lanes[i].back().getYear());
@@ -86,6 +86,8 @@ int main()
                     lanes[i].pop_front();
                 }
             }
+            else
+                cout << endl;
             cout << "Queue: " << endl;
             print(lanes[i]);
             l++;
