@@ -13,7 +13,7 @@ using namespace std;
 
 const int INITIAL_QUEUE = 2, LANES = 4, PROB1 = 46, PROB2 = 39, PROB3 = 15;
 
-void print(deque<Car> (&lanes)[4]);
+void print(deque<Car> (&lanes)[LANES]);
 
 int main()
 {
@@ -85,7 +85,7 @@ int main()
 // prints the current queue
 // arguments: address to toll_booth deque list
 // returns none
-void print(deque<Car> (&lanes)[4])
+void print(deque<Car> (&lanes)[LANES])
 {
     for(auto lane : lanes)
     {
@@ -93,6 +93,7 @@ void print(deque<Car> (&lanes)[4])
         {
             cout << "     ";
             it.print();
+
         }
 
     }
