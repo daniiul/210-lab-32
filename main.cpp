@@ -11,7 +11,7 @@
 
 using namespace std;
 
-const int INITIAL_QUEUE = 2;
+const int INITIAL_QUEUE = 2, LANES = 4, PROB1 = 46, PROB2 = 39, PROB3 = 15;
 
 void print(deque<Car> (&lanes)[4]);
 
@@ -19,19 +19,22 @@ int main()
 {
     srand(time(0));
 
-    deque<Car> lanes[4];
+    deque<Car> lanes[LANES];
 
     int i = 0;
 
     cout << "Initial Queue: " << endl;
-    while(i < INITIAL_QUEUE)
+
+    for(auto lane : lanes)
     {
-        for(auto lane : lanes)
+        while(i < INITIAL_QUEUE)
         {
             Car temp;
             lane.push_back(temp);
+            cout << "ss" << endl;
             i++;
         }
+        i = 0;
     }
     print(lanes);
 
@@ -43,22 +46,36 @@ int main()
         for (auto lane : lanes)
         {
             int prob = rand() % 100 + 1;  // returns random number 1-100
-            cout << "Time " << time << " operation: ";
-            if (prob <= 55)
+            cout << "Lane " << l << ": ";
+            if (prob <= PROB1)
             {
                 cout << "Left lane: ";
-                toll_booth.front().print();
-                toll_booth.pop_front();
+                lane.front().print();
+                lane.pop_front();
             }
-            else
+            else if (prob <= PROB2)
             {
                 Car temp;
                 cout << "Joined lane: ";
                 temp.print();
-                toll_booth.push_back(temp);
+                lane.push_back(temp);
+            }
+            else if (prob <= PROB3)
+            {
+                int randLane = rand() % 4;
+                do
+                {
+                    randLane = rand() % 4;
+                } while(randLane != (l - 1));
+                Car temp = lane.back();
+                lane.pop_back();
+                lanes[randLane].push_back(temp);
+                cout << "Switched: ";
+                temp.print();
             }
             cout << "Queue: " << endl;
-            print(toll_booth);
+            print(lanes);
+            l++;
         }
        time++;
     }
