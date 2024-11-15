@@ -13,45 +13,54 @@ using namespace std;
 
 const int INITIAL_QUEUE = 2;
 
-void print(deque<Car>& toll_booth);
+void print(deque<Car> (&lanes)[4]);
 
 int main()
 {
     srand(time(0));
 
-    deque<Car> toll_booth;
+    deque<Car> lanes[4];
+
     int i = 0;
 
     cout << "Initial Queue: " << endl;
     while(i < INITIAL_QUEUE)
     {
-        Car temp;
-        toll_booth.push_back(temp);
-        i++;
-    }
-    print(toll_booth);
-
-    int time = 1;
-    while(!toll_booth.empty())
-    {
-        int prob = rand() % 100 + 1;  // returns random number 1-100
-        cout << "Time " << time << " operation: ";
-        if (prob <= 55)
-        {
-            cout << "Left lane: ";
-            toll_booth.front().print();
-            toll_booth.pop_front();
-        }
-        else
+        for(auto lane : lanes)
         {
             Car temp;
-            cout << "Joined lane: ";
-            temp.print();
-            toll_booth.push_back(temp);
+            lane.push_back(temp);
+            i++;
         }
-        cout << "Queue: " << endl;
-        print(toll_booth);
-        time++;
+    }
+    print(lanes);
+
+    int time = 1;
+    while(time <= 20)
+    {
+        cout << "Time " << time << ": ";
+        int l = 1;
+        for (auto lane : lanes)
+        {
+            int prob = rand() % 100 + 1;  // returns random number 1-100
+            cout << "Time " << time << " operation: ";
+            if (prob <= 55)
+            {
+                cout << "Left lane: ";
+                toll_booth.front().print();
+                toll_booth.pop_front();
+            }
+            else
+            {
+                Car temp;
+                cout << "Joined lane: ";
+                temp.print();
+                toll_booth.push_back(temp);
+            }
+            cout << "Queue: " << endl;
+            print(toll_booth);
+        }
+       time++;
     }
 
 
@@ -59,11 +68,15 @@ int main()
 // prints the current queue
 // arguments: address to toll_booth deque list
 // returns none
-void print(deque<Car>& toll_booth)
+void print(deque<Car> (&lanes)[4])
 {
-    for(auto it : toll_booth)
+    for(auto lane : lanes)
     {
-        cout << "     ";
-        it.print();
+        for(auto it : lane)
+        {
+            cout << "     ";
+            it.print();
+        }
+
     }
 }
