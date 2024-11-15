@@ -52,22 +52,8 @@ int main()
         {
             int prob = rand() % 100 + 1;  // returns random number 1-100
             cout << "Lane " << l << ": ";
-            if (prob <= PROB1)
-            {
-                if(!lanes[i].empty()){
-                    cout << "Left lane: ";
-                    lanes[i].front().print();
-                    lanes[i].pop_front();
-                }
-            }
-            else if (prob <= PROB2)
-            {
-                Car temp;
-                cout << "Joined lane: ";
-                temp.print();
-                lanes[i].push_back(temp);
-            }
-            else if (prob <= PROB3)
+
+            if (prob <= PROB3)
             {
                 if(!lanes[i].empty()){
                     int randLane = rand() % 4;
@@ -83,6 +69,21 @@ int main()
                     lanes[randLane].push_back(temp);
                     cout << "Switched: ";
                     temp.print();
+                }
+            }
+            else if (prob <= PROB2)
+            {
+                Car temp;
+                cout << "Joined lane: ";
+                temp.print();
+                lanes[i].push_back(temp);
+            }
+            else if (prob <= PROB1)
+            {
+                if(!lanes[i].empty()){
+                    cout << "Left lane: ";
+                    lanes[i].front().print();
+                    lanes[i].pop_front();
                 }
             }
             cout << "Queue: " << endl;
